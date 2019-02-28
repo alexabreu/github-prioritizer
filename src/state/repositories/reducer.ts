@@ -1,5 +1,5 @@
-import { ActionWithPayload } from '../utils/actionHelpers';
 import ActionTypes from './actionTypes';
+import { RepositoryActions } from './actions';
 
 const initialState: State['repositories'] = {
   collection: [],
@@ -7,7 +7,7 @@ const initialState: State['repositories'] = {
   isLoading: false,
 }
 
-const tokens = (state = initialState, action: ActionWithPayload<ActionTypes, any>) => {
+const tokens = (state = initialState, action: RepositoryActions) => {
   switch (action.type) {
     case ActionTypes.FETCH_REPOSITORIES:
       return {...state, isLoading: true }; 

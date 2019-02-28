@@ -11,6 +11,9 @@ export function createAction<T extends string, P>(type: T, payload?: P) {
   return payload === undefined ? { type } : { type, payload };
 }
 
-export type ThunkResult<R> = ThunkAction<R, State, undefined, ActionWithPayload<string, any>>;
+export interface ActionWithPayload<T, P> extends Action<T> {
+  payload: P;
+}
+export type ThunkResult<R> = ThunkAction<R, State, undefined, Action | ActionWithPayload<string, any>>;
 
 export type ActionsUnion<A extends ActionCreatorsMapObject> = ReturnType<A[keyof A]>;

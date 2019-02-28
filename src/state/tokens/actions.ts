@@ -1,10 +1,20 @@
+import { ActionsUnion } from './../utils/actionHelpers';
 import { createAction, ThunkResult } from "../utils/actionHelpers";
-import TokenActionTypes from './actionTypes';
-import RepositoryActions from '../repositories/actions';
+import ActionTypes from './actionTypes';
+import { Actions as RepositoryActions } from '../repositories/actions';
 import Cookies from 'js-cookie';
 
-const Actions = {
-  addNewToken: (token: Token['token']) => createAction(TokenActionTypes.ADD_NEW_TOKEN, { token }),
+const ActionCreators = {
+  addNewToken: (token: Token['token']) => createAction(ActionTypes.ADD_NEW_TOKEN, { token }),
+  selectToken: (id: Token['id']) => createAction(ActionTypes.SELECT_TOKEN, { id }),
+  deleteToken: (id: Token['id']) => createAction(ActionTypes.DELETE_TOKEN, { id }),
+}
+
+export type TokenActions = ActionsUnion<typeof ActionCreators>;
+
+export const Actions = {
+  ...ActionCreators,
+
   selectToken: (id: Token['id']): ThunkResult<void> => (dispatch, getState) => {
     const { collection } = getState().tokens;
     const selectedToken = collection.find((token) => token.id === id) as Token;
@@ -15,9 +25,8 @@ const Actions = {
 
     dispatch(RepositoryActions.fetchRepositories());
 
-    return createAction(TokenActionTypes.SELECT_TOKEN, { id });
+    return ActionCreators.selectToken(id);
   },
-  deleteToken: (id: Token['id']) => createAction(TokenActionTypes.DELETE_TOKEN, { id }),
 }
 
 export default Actions;

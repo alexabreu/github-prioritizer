@@ -1,15 +1,14 @@
 import uuidv4 from 'uuid/v4';
 
-import { ActionsUnion } from '../utils/actionHelpers';
-import Actions from './actions';
 import ActionTypes from './actionTypes';
+import { TokenActions } from './actions';
 
 const initialState: State['tokens'] = {
   collection: [],
   selectedToken: undefined,
 }
 
-const tokens = (state = initialState, action: ActionsUnion<typeof Actions> | any) => {
+const tokens = (state = initialState, action: TokenActions) => {
   const collection = [...state.collection];
 
   switch(action.type) {

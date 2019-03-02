@@ -1,8 +1,9 @@
-import { ActionsUnion } from './../utils/actionHelpers';
-import { createAction, ThunkResult } from "../utils/actionHelpers";
+import Cookies from 'js-cookie';
+
+import { createAction, ThunkResult, ActionsUnion } from "../utils/actionHelpers";
 import ActionTypes from './actionTypes';
 import { Actions as RepositoryActions } from '../repositories/actions';
-import Cookies from 'js-cookie';
+
 
 const ActionCreators = {
   addNewToken: (token: Token['token']) => createAction(ActionTypes.ADD_NEW_TOKEN, { token }),

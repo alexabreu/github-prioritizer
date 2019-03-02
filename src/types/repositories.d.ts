@@ -4,7 +4,8 @@ interface Repository {
   full_name: string;
   owner: Owner;
   private: boolean;
-  issues_url: string;
+  url: string;
+  description: string;
 }
 
 interface Owner {

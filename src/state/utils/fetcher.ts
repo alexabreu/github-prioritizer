@@ -3,8 +3,9 @@ import Cookies from 'js-cookie';
 import { CONFIG } from './../../constants/config';
 
 class Fetcher {
-  static fetch(url: string, options: RequestInit = {}) {
-    return fetch(`${CONFIG.GITHUB_BASE_URL}${url}`, 
+  static fetch(url: string, isAbsoluteUrl: boolean = false, options: RequestInit = {}) {
+    const resourUrl = isAbsoluteUrl ? url : `${CONFIG.GITHUB_BASE_URL}${url}`; 
+    return fetch(resourUrl, 
       { 
         ...options, 
         headers: { ...options.headers, Authorization: `token ${Cookies.get('github_token')}` } 

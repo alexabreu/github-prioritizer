@@ -1,7 +1,7 @@
-import { ActionsUnion } from './../utils/actionHelpers';
-import { ThunkResult, createAction } from '../utils/actionHelpers';
+import { ThunkResult, ActionsUnion, createAction } from '../utils/actionHelpers';
 import ActionTypes from './actionTypes';
-import Service from "./service";
+import Service from './service';
+import IssueActions from '../issues/actions';
 
 const ActionCreators = {
   selectRepository: (id: Repository['id']) =>
@@ -21,6 +21,15 @@ export type RepositoryActions = ActionsUnion<typeof ActionCreators>;
 
 export const Actions = {
   ...ActionCreators,
+
+  selectRepository: (id: Repository['id']): ThunkResult<void> => 
+    (dispatch, getState) => {
+      const repository = getState().repositories.collection.find((repository) => repository.id === id) as Repository;
+
+      dispatch(IssueActions.fetchIssues(repository));
+
+      return dispatch(ActionCreators.selectRepository(id));
+    },
 
   fetchRepositories: (): ThunkResult<Promise<Repository[]>> => async (dispatch, getState) => {
     dispatch(ActionCreators.fetchRepositories());

@@ -4,13 +4,15 @@ import throttle from 'lodash/throttle';
 
 import tokens from './tokens/reducer';
 import repositories from './repositories/reducer';
+import issues from './issues/reducer';
 import { loadState, saveState } from "./utils/stateStorage";
 
 const localStorageState = loadState();
 
 const rootReducer = combineReducers<State>({
   tokens,
-  repositories
+  repositories,
+  issues
 });
 
 const store = createStore(rootReducer, localStorageState, applyMiddleware(thunk));

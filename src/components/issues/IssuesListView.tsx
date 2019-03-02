@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { List, WithStyles, withStyles } from '@material-ui/core';
+import cn from 'classnames';
 
 import WithIssues, { WithIssuesProps } from './containers/WithIssues';
 import IssueListItem from './IssueListItem';
@@ -19,7 +20,7 @@ class IssuesListView extends Component<
     const { issues, classes } = this.props;
 
     return (
-      <List className={classes.root}>
+      <List className={cn({[classes.hasIssues]: this.hasIssues})}>
         {
           issues.map((issue) =>
           <IssueListItem
@@ -30,6 +31,12 @@ class IssuesListView extends Component<
         }
       </List>
     );
+  }
+
+  private get hasIssues() {
+    const { issues } = this.props;
+
+    return !!issues.length;
   }
 }
  

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { List, WithStyles, withStyles } from '@material-ui/core';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import cn from 'classnames';
 
 import WithIssues, { WithIssuesProps } from './containers/WithIssues';
@@ -7,36 +8,54 @@ import IssueListItem from './IssueListItem';
 
 import styles from './styles/ListView';
 
-export interface IssuesListViewProps {
-  
-}
- 
 class IssuesListView extends Component<
-  IssuesListViewProps & 
   WithIssuesProps &
   WithStyles
 > {
   public render() { 
-    const { issues, classes } = this.props;
+    const { issues, priority, classes } = this.props;
 
     return (
-      <List className={cn({[classes.hasIssues]: this.hasIssues})}>
-        {
-          issues.map((issue) =>
-          <IssueListItem
-            key={issue.id}
-            issue={issue}
-          />
-          )
-        }
-      </List>
+      <DragDropContext onDragEnd={this.onDragEnd}>
+        <Droppable droppableId="droppable">
+          {(provided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              className={cn({ [classes.hasIssues]: this.hasIssues })}
+              // style={getListStyle(snapshot.isDraggingOver)}
+            >
+              <List>
+                {
+                  priority.map((id: Issue['id'], index) => 
+                    <IssueListItem
+                      key={id}
+                      issue={issues[id]}
+                      index={index}
+                    />
+                    )
+                  }
+              </List>
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     );
   }
 
-  private get hasIssues() {
-    const { issues } = this.props;
+  private onDragEnd = (result: DropResult) => {
+    const { reorderIssuePriority, repository } = this.props;
 
-    return !!issues.length;
+    if (!result.destination) {
+      return;
+    }
+
+    reorderIssuePriority(repository, result.source.index, result.destination.index);
+  }
+
+  private get hasIssues() {
+    const { priority } = this.props;
+
+    return !!priority.length;
   }
 }
  

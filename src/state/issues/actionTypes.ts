@@ -3,9 +3,7 @@ export enum ActionTypes {
   FETCH_ISSUES_SUCCESS = 'issues.fetch.success',
   FETCH_ISSUES_ERROR = 'issues.fetch.error',
 
-  RESET_ISSUES = 'issues.reset',
-
-  SET_ISSUE_PRIORITY = 'issues.prioritize'
+  REORDER_ISSUE_PRIORITY = 'issues.priority.reorder'
 }
 
 export default ActionTypes;

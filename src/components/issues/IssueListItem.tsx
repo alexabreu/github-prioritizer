@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { Draggable } from 'react-beautiful-dnd';
 
 import { ListItem, ListItemText, ListItemAvatar, Avatar, Typography, withStyles, WithStyles } from '@material-ui/core';
 import FaceIcon from '@material-ui/icons/Face';
@@ -8,26 +9,34 @@ import styles from './styles/ListItem';
 
 export interface IssueListItemProps {
   issue: Issue;
+  index: number;
 }
 
 class IssueListItem extends Component<IssueListItemProps & WithStyles> {
   public render() {
-    const { issue, classes } = this.props;
+    const { issue, classes, index } = this.props;
 
     return (
-      <ListItem
-        alignItems="flex-start"
-      >
-        {this.renderAssignee()}
-        <ListItemText
-          primary={issue.title}
-          secondary={this.renderSecondaryText()}
-        />
-        <ListItemText
-          className={classes.updatedAt}
-          secondary={this.updatedAtText}
-        />
-      </ListItem>
+      <Draggable key={issue.id} draggableId={`${issue.id}`} index={index}>
+        {(provided, snapshot) => (
+          <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+            <ListItem
+              component="div"
+              alignItems="flex-start"
+            >
+              {this.renderAssignee()}
+              <ListItemText
+                primary={issue.title}
+                secondary={this.renderSecondaryText()}
+              />
+              <ListItemText
+                className={classes.updatedAt}
+                secondary={this.updatedAtText}
+              />
+            </ListItem>
+          </div>
+        )}
+      </Draggable>
     );
   }
 
@@ -48,10 +57,10 @@ class IssueListItem extends Component<IssueListItemProps & WithStyles> {
   private renderSecondaryText() {
     const { issue, classes } = this.props;
     return (
-      <p className={classes.secondaryText}>
+      <span className={classes.secondaryText}>
         <span className={classes.createdAt}>{this.createdAtText}</span>
         <Typography className={classes.body} component="span" color="textPrimary">{issue.body}</Typography>
-      </p>
+      </span>
     )
   }
 

@@ -13,8 +13,8 @@ const ActionCreators = {
   fetchIssuesError: (repository: Repository, error: Error) =>
     createAction(ActionTypes.FETCH_ISSUES_ERROR, { repository, error }),
 
-  resetIssues: () =>
-    createAction(ActionTypes.RESET_ISSUES)
+  reorderIssuePriority: (repository: Repository, startIndex: number, endIndex: number) =>
+    createAction(ActionTypes.REORDER_ISSUE_PRIORITY, { repository, startIndex, endIndex })
 }
 
 export type IssueActions = ActionsUnion<typeof ActionCreators>;

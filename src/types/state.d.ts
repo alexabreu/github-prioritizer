@@ -10,7 +10,7 @@ interface State {
   },
   issues: {
     isLoading: boolean;
-    collection: Record<Repository['id'], Issue[]>;
+    collection: Record<Repository['id'], Record<Issue['id'], Issue>>;
     priority: Record<Repository['id'], Issue['id'][]>;
   }
 }

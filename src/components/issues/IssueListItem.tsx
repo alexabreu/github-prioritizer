@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
-import { ListItem, ListItemText, ListItemAvatar, Avatar } from '@material-ui/core';
+import { ListItem, ListItemText, ListItemAvatar, Avatar, Typography, withStyles, WithStyles } from '@material-ui/core';
 import FaceIcon from '@material-ui/icons/Face';
 
+import styles from './styles/ListItem';
 
 export interface IssueListItemProps {
   issue: Issue;
 }
 
-class IssueListItem extends Component<IssueListItemProps> {
+class IssueListItem extends Component<IssueListItemProps & WithStyles> {
   public render() {
-    const { issue } = this.props;
+    const { issue, classes } = this.props;
 
     return (
       <ListItem
@@ -19,13 +21,38 @@ class IssueListItem extends Component<IssueListItemProps> {
         {this.renderAssignee()}
         <ListItemText
           primary={issue.title}
-          secondary={issue.created_at}
+          secondary={this.renderSecondaryText()}
         />
         <ListItemText
-          secondary={issue.updated_at}
+          className={classes.updatedAt}
+          secondary={this.updatedAtText}
         />
       </ListItem>
     );
+  }
+
+  private get createdAtText() {
+    const { issue } = this.props;
+    const date = moment(issue.created_at).format('MM/DD/YYYY');
+
+    return `Created on: ${date}`;
+  }
+
+  private get updatedAtText() {
+    const { issue } = this.props;
+    const relativeDate = moment(issue.updated_at).fromNow();
+
+    return `Updated ${relativeDate}.`;
+  }
+
+  private renderSecondaryText() {
+    const { issue, classes } = this.props;
+    return (
+      <p className={classes.secondaryText}>
+        <span className={classes.createdAt}>{this.createdAtText}</span>
+        <Typography className={classes.body} component="span" color="textPrimary">{issue.body}</Typography>
+      </p>
+    )
   }
 
   private renderAssignee() {
@@ -48,4 +75,4 @@ class IssueListItem extends Component<IssueListItemProps> {
   }
 }
 
-export default IssueListItem;
+export default withStyles(styles)(IssueListItem);

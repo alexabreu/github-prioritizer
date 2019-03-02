@@ -8,13 +8,8 @@ import RepositoryListItem from './RepositoryListItem';
 import styles from './styles/ListView';
 import { Route, withRouter, RouteComponentProps } from 'react-router';
 import IssuesListView from '../issues/IssuesListView';
-
-export interface RepositoriesListViewProps {
-  
-}
  
 class RepositoriesListView extends Component<
-  RepositoriesListViewProps & 
   WithRepositoriesProps &
   WithStyles &
   RouteComponentProps
@@ -28,23 +23,24 @@ class RepositoriesListView extends Component<
   }
 
   public render() { 
-    const { repositories, selectRepository, selectedRepository, classes } = this.props;
+    const { repositories, selectRepository, selectedRepository, isLoadingIssues, classes } = this.props;
 
     return (
       <>
-      <List className={cn(classes.root, {[classes.hasIssues]: this.hasIssues})}>
-        {
-          repositories.map((repository) =>
-          <RepositoryListItem
-            key={repository.id}
-            repository={repository}
-            onSelect={selectRepository}
-            selectedRepository={selectedRepository}
-          />
-          )
-        }
-      </List>
-      <Route path="/repos/:repository_id/issues" component={IssuesListView} />
+        <List className={cn(classes.root, {[classes.hasIssues]: this.hasIssues})}>
+          {
+            repositories.map((repository) =>
+            <RepositoryListItem
+              key={repository.id}
+              repository={repository}
+              onSelect={selectRepository}
+              selectedRepository={selectedRepository}
+              isLoadingIssues={isLoadingIssues}
+            />
+            )
+          }
+        </List>
+        <Route path="/repos/:repository_id/issues" component={IssuesListView} />
       </>
     );
   }

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { List, WithStyles } from '@material-ui/core';
+import { List, WithStyles, withStyles } from '@material-ui/core';
 
 import WithIssues, { WithIssuesProps } from './containers/WithIssues';
 import IssueListItem from './IssueListItem';
+
+import styles from './styles/ListView';
 
 export interface IssuesListViewProps {
   
@@ -10,13 +12,14 @@ export interface IssuesListViewProps {
  
 class IssuesListView extends Component<
   IssuesListViewProps & 
-  WithIssuesProps
+  WithIssuesProps &
+  WithStyles
 > {
   public render() { 
-    const { issues } = this.props;
+    const { issues, classes } = this.props;
 
     return (
-      <List>
+      <List className={classes.root}>
         {
           issues.map((issue) =>
           <IssueListItem
@@ -30,4 +33,4 @@ class IssuesListView extends Component<
   }
 }
  
-export default WithIssues(IssuesListView);
+export default withStyles(styles)(WithIssues(IssuesListView));

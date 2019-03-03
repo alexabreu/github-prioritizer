@@ -2,6 +2,7 @@ import { RepositoryActions } from './../repositories/actions';
 import { ThunkResult, ActionsUnion, createAction } from '../utils/actionHelpers';
 import ActionTypes from './actionTypes';
 import Service from "./service";
+import { push } from 'react-router-redux';
 
 const ActionCreators = {
   fetchIssues: (repository: Repository) => 
@@ -23,8 +24,15 @@ export const Actions = {
   ...ActionCreators,
 
   fetchIssues: (repository: Repository): ThunkResult<Promise<Issue[]>> => async (dispatch, getState) => {
-    dispatch(ActionCreators.fetchIssues(repository));
     let issues: Issue[] = [];
+
+    // In the case of a hard refresh with a selected repo url and we don't have a real selected repo.
+    if (!repository) {
+      dispatch(push('/repos'));
+      return issues;
+    }
+
+    dispatch(ActionCreators.fetchIssues(repository));
 
     try {
       issues = await Service.fetchIssues(repository);

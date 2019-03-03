@@ -18,7 +18,6 @@ const tokens = (state = initialState, action: TokenActions) => {
       return {
         ...state,
         collection,
-        selectedToken: state.selectedToken ? state.selectedToken : newToken
       };
     case ActionTypes.SELECT_TOKEN:
       return {

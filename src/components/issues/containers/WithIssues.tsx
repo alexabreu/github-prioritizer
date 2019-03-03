@@ -7,12 +7,13 @@ import { RouteComponentProps } from 'react-router';
 const mapStateToProps = (state: State, ownProps: RouteComponentProps<{repository_id: string}>) => {
   const repository = state.repositories.collection.find(
     (repository) => `${repository.id}` === ownProps.match.params.repository_id
-  ) as Repository;
+  );
 
-  const priority = state.issues.priority[repository.id];
+  const priority = repository ? state.issues.priority[repository.id] : [];
+  const issues = repository ? state.issues.collection[repository.id] : {};
 
   return {
-    issues: state.issues.collection[repository.id],
+    issues,
     priority,
     isLoadingIssues: state.issues.isLoading,
     repository,

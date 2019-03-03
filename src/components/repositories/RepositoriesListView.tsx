@@ -8,6 +8,7 @@ import RepositoryListItem from './RepositoryListItem';
 import styles from './styles/ListView';
 import { Route, withRouter, RouteComponentProps } from 'react-router';
 import IssuesListView from '../issues/IssuesListView';
+import EmptyState from '../common/EmptyState';
  
 class RepositoriesListView extends Component<
   WithRepositoriesProps &
@@ -24,6 +25,10 @@ class RepositoriesListView extends Component<
 
   public render() { 
     const { repositories, selectRepository, selectedRepository, isLoadingIssues, classes } = this.props;
+
+    if (!repositories) {
+      return <EmptyState text="No repositories found. Please add your GitHub API token."/>
+    }
 
     return (
       <>

@@ -1,3 +1,5 @@
+import { push } from 'react-router-redux';
+
 import { ThunkResult, ActionsUnion, createAction } from '../utils/actionHelpers';
 import ActionTypes from './actionTypes';
 import Service from './service';
@@ -27,6 +29,8 @@ export const Actions = {
       const repository = getState().repositories.collection.find((repository) => repository.id === id) as Repository;
 
       dispatch(IssueActions.fetchIssues(repository));
+
+      dispatch(push(`/repos/${repository.id}/issues`));
 
       return dispatch(ActionCreators.selectRepository(id));
     },

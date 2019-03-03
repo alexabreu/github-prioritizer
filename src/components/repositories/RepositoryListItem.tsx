@@ -43,7 +43,6 @@ class RepositoryListItem extends Component<RepositoryListItemProps & RouteCompon
   private handleSelect = (e: MouseEvent<HTMLElement>) => {
     const { onSelect, repository, history } = this.props;
 
-    history.replace(`/repos/${repository.id}/issues`);
     onSelect(repository.id, repository.url);
   }
 }

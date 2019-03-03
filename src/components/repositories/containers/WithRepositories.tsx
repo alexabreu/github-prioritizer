@@ -2,6 +2,7 @@ import React, { Component, ComponentType } from 'react';
 import { connect } from 'react-redux';
 import RepositoryActions from '../../../state/repositories/actions';
 import { Dispatch } from 'redux';
+import isEmpty from 'lodash/isEmpty';
 
 const mapStateToProps = (state: State) => {
   const selectedRepository= state.repositories.selectedRepository;
@@ -10,7 +11,7 @@ const mapStateToProps = (state: State) => {
     repositories: state.repositories.collection,
     selectedRepository,
     isLoadingIssues: state.issues.isLoading,
-    hasIssues: !!(selectedRepository && state.issues.priority[selectedRepository.id].length)
+    hasIssues: !!(selectedRepository && !isEmpty(state.issues.priority[selectedRepository.id]))
   }
 };
 

@@ -1,3 +1,5 @@
+import isEmpty from 'lodash/isEmpty';
+
 import ActionTypes from './actionTypes';
 import { IssueActions } from './actions';
 
@@ -33,9 +35,11 @@ const issues = (state = initialState, action: IssueActions) => {
       // This is so we can keep our locally set priority.
       // We wouldn't need this check if we were saving our priority[] back to the server.
       // If we don't have a priority[], then let's take the ordering returned by the GitHub API.
-      const hasBeenPrioritized = !!state.priority[action.payload.repository.id].length;
-      const priority = hasBeenPrioritized ?
-        state.priority[action.payload.repository.id] :
+      let priority = state.priority[action.payload.repository.id];
+      const hasBeenPrioritized = !isEmpty(priority);
+      
+      priority = hasBeenPrioritized ?
+        priority :
         action.payload.issues.map((issue) => issue.id);
 
       return {

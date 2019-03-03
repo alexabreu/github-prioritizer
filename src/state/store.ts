@@ -1,4 +1,5 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
+import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk';
 import throttle from 'lodash/throttle';
 
@@ -15,10 +16,12 @@ const rootReducer = combineReducers<State>({
   issues
 });
 
-const store = createStore(rootReducer, localStorageState, applyMiddleware(thunk));
+export const configureStore = (history: any) => {
+  const store = createStore(rootReducer, localStorageState, applyMiddleware(thunk, routerMiddleware(history)));
 
-store.subscribe(
-  throttle(() => saveState(store.getState()), 1000)
-);
+  store.subscribe(
+    throttle(() => saveState(store.getState()), 1000)
+  );
 
-export default store;
+  return store;
+}

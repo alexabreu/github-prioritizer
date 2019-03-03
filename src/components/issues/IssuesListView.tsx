@@ -3,6 +3,7 @@ import { List, WithStyles, withStyles, Typography } from '@material-ui/core';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import InfoIcon from '@material-ui/icons/Info';
 import cn from 'classnames';
+import isEmpty from 'lodash/isEmpty';
 
 import WithIssues, { WithIssuesProps } from './containers/WithIssues';
 import DraggableIssueListItem from './DraggableIssueListItem';
@@ -16,7 +17,7 @@ class IssuesListView extends Component<
   public render() { 
     const { issues, priority, classes } = this.props;
 
-    if (!priority.length) { return null; }
+    if (isEmpty(priority)) { return null; }
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
@@ -57,9 +58,9 @@ class IssuesListView extends Component<
   private onDragEnd = (result: DropResult) => {
     const { reorderIssuePriority, repository } = this.props;
 
-    if (!result.destination) {
-      return;
-    }
+    if (!repository) { return; }
+
+    if (!result.destination) { return;}
 
     reorderIssuePriority(repository, result.source.index, result.destination.index);
   }

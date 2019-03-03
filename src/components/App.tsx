@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
-import { Route, Redirect, BrowserRouter, Switch } from "react-router-dom";
+import { Route, Redirect, Switch, Router } from "react-router-dom";
 import { MuiThemeProvider, withStyles, WithStyles} from '@material-ui/core';
+import { createBrowserHistory } from 'history';
 
 import { Provider } from 'react-redux';
-import store from '../state/store';
+import { configureStore } from '../state/store';
 
 import theme from './common/Theme';
 
 import Header from './common/Header';
 import RepositoriesListView from './repositories/RepositoriesListView';
-import IssuesListView from './issues/IssuesListView';
 
 import appStyles from './AppStyles';
+
+const history = createBrowserHistory();
+const store = configureStore(history);
 
 class App extends Component<WithStyles> {
   public render() {
     const { classes } = this.props;
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <Provider store={store}>
           <MuiThemeProvider theme={theme}>
               <Header/>
@@ -30,7 +33,7 @@ class App extends Component<WithStyles> {
               </main>
           </MuiThemeProvider>
         </Provider>
-      </BrowserRouter >
+      </Router>
     );
   }
 }

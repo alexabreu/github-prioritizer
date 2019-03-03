@@ -8,6 +8,7 @@ const styles = (theme: Theme) => {
       display: 'flex',
       margin: '75px 0 0 0',
       border: '1px solid #eee',
+      minHeight: '100vh',
     }
   };
 }

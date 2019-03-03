@@ -2,7 +2,9 @@
 
 # GitHub Issue Prioritizer
 
-This application is built using React, Redux, Thunk, React-Router, and the Material-UI component library. The app allows a user to view his/her GitHub repos and the issues associated with a give repo. The user can then also reorder the priority of a repo's issues via drag & drop.
+This application is built using React, Redux, Thunk, React-Router, and the Material-UI component library. It also makes use of TypeScript to ensure type safety, which comes in handy when trying to identify and work with Redux action payloads. Proper typing adds an unbeatable level of static analysis which also makes refactoring less stressful because your IDE will automatically let you when you've made a mistake.
+
+The app experience allows a user to view his/her GitHub repos and the issues associated with the given repo. The user can then also reorder the priority of the repo's issues via drag & drop.
 
 ### Local Storage
 

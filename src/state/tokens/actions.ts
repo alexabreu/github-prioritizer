@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { createAction, ThunkResult, ActionsUnion } from "../utils/actionHelpers";
 import ActionTypes from './actionTypes';
 import { Actions as RepositoryActions } from '../repositories/actions';
-import { push } from 'react-router-redux';
+import { replace } from 'react-router-redux';
 
 
 const ActionCreators = {
@@ -36,7 +36,7 @@ export const Actions = {
     // any AJAX calls would reference the cookie for authentication
     Cookies.set('github_token', selectedToken.token);
 
-    dispatch(push('/repos'));
+    dispatch(replace('/repos'));
 
     dispatch(RepositoryActions.fetchRepositories());
 

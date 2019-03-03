@@ -1,4 +1,4 @@
-import { push } from 'react-router-redux';
+import { replace } from 'react-router-redux';
 
 import { ThunkResult, ActionsUnion, createAction } from '../utils/actionHelpers';
 import ActionTypes from './actionTypes';
@@ -30,7 +30,7 @@ export const Actions = {
 
       dispatch(IssueActions.fetchIssues(repository));
 
-      dispatch(push(`/repos/${repository.id}/issues`));
+      dispatch(replace(`/repos/${repository.id}/issues`));
 
       return dispatch(ActionCreators.selectRepository(id));
     },

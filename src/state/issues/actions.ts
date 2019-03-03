@@ -2,7 +2,7 @@ import { RepositoryActions } from './../repositories/actions';
 import { ThunkResult, ActionsUnion, createAction } from '../utils/actionHelpers';
 import ActionTypes from './actionTypes';
 import Service from "./service";
-import { push } from 'react-router-redux';
+import { replace } from 'react-router-redux';
 
 const ActionCreators = {
   fetchIssues: (repository: Repository) => 
@@ -28,7 +28,7 @@ export const Actions = {
 
     // In the case of a hard refresh with a selected repo url and we don't have a real selected repo.
     if (!repository) {
-      dispatch(push('/repos'));
+      dispatch(replace('/repos'));
       return issues;
     }
 

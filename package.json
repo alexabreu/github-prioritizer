@@ -5,12 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
-    "@types/jest": "24.0.6",
-    "@types/node": "11.9.5",
-    "@types/react": "16.8.4",
-    "@types/react-dom": "16.8.2",
     "classnames": "^2.2.6",
-    "enzyme": "^3.9.0",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
@@ -46,15 +41,20 @@
     "@types/classnames": "^2.2.7",
     "@types/enzyme": "^3.9.0",
     "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/jest": "^24.0.6",
     "@types/js-cookie": "^2.2.1",
     "@types/lodash": "^4.14.121",
     "@types/moment": "^2.13.0",
+    "@types/node": "^11.9.5",
+    "@types/react": "^16.8.4",
     "@types/react-beautiful-dnd": "^10.0.3",
+    "@types/react-dom": "^16.8.2",
     "@types/react-redux": "^7.0.1",
     "@types/react-router": "^4.4.4",
     "@types/react-router-dom": "^4.3.1",
     "@types/react-router-redux": "^5.0.18",
     "@types/uuid": "^3.4.4",
+    "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0"
   }
 }

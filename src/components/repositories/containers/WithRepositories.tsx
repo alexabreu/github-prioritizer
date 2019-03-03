@@ -10,7 +10,7 @@ const mapStateToProps = (state: State) => {
     repositories: state.repositories.collection,
     selectedRepository,
     isLoadingIssues: state.issues.isLoading,
-    hasIssues: selectedRepository && state.issues.priority[selectedRepository.id].length
+    hasIssues: !!(selectedRepository && state.issues.priority[selectedRepository.id].length)
   }
 };
 

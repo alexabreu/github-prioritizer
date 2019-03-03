@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { List, withStyles, WithStyles } from '@material-ui/core';
 import cn from 'classnames';
 

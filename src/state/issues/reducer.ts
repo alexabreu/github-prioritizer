@@ -7,7 +7,7 @@ const initialState: State['issues'] = {
   priority: {},
 }
 
-const reorderIssuePriority = (priority: Issue['id'][], startIndex: number, endIndex: number) => {
+export const reorderIssuePriority = (priority: Issue['id'][], startIndex: number, endIndex: number) => {
   const newPriority = [...priority];
 
   const [ removed ] = newPriority.splice(startIndex, 1);
@@ -16,7 +16,7 @@ const reorderIssuePriority = (priority: Issue['id'][], startIndex: number, endIn
   return newPriority;
 }
 
-const normalizeIssues = (issues: Issue[]): Record<Issue['id'], Issue> => {
+export const normalizeIssues = (issues: Issue[]): Record<Issue['id'], Issue> => {
   const normalized : Record<Issue['id'], Issue> = {};
 
   return issues.reduce((memo, issue) => {

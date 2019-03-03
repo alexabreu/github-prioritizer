@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { List, WithStyles, withStyles } from '@material-ui/core';
+import { List, WithStyles, withStyles, Typography } from '@material-ui/core';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import InfoIcon from '@material-ui/icons/Info';
 import cn from 'classnames';
 
 import WithIssues, { WithIssuesProps } from './containers/WithIssues';
-import IssueListItem from './IssueListItem';
+import DraggableIssueListItem from './DraggableIssueListItem';
 
 import styles from './styles/ListView';
 
@@ -15,19 +16,24 @@ class IssuesListView extends Component<
   public render() { 
     const { issues, priority, classes } = this.props;
 
+    if (!priority.length) { return null; }
+
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
             <div
               ref={provided.innerRef}
-              className={cn({ [classes.hasIssues]: this.hasIssues })}
-              // style={getListStyle(snapshot.isDraggingOver)}
+              className={this.getClassName(snapshot.isDraggingOver)}
             >
+              <Typography variant="caption" className={classes.reorderingHelperText}>
+                <InfoIcon className={classes.reorderingHelperIcon} color="secondary"/>
+                Drag &amp; drop issues to reorder their priority.
+              </Typography>
               <List>
                 {
                   priority.map((id: Issue['id'], index) => 
-                    <IssueListItem
+                    <DraggableIssueListItem
                       key={id}
                       issue={issues[id]}
                       index={index}
@@ -40,6 +46,12 @@ class IssuesListView extends Component<
         </Droppable>
       </DragDropContext>
     );
+  }
+
+  private getClassName = (isDraggingOver: boolean) => {
+    const { classes } = this.props;
+
+    return cn(classes.root, { [classes.isDraggingOver]: isDraggingOver, [classes.hasIssues]: this.hasIssues });
   }
 
   private onDragEnd = (result: DropResult) => {
